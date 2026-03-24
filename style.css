@@ -6,7 +6,6 @@
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    min-height: 100vh;
     background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
     display: flex;
     justify-content: center;
@@ -60,10 +59,18 @@ body {
 
 .lista-botoes button:hover {
     background: #facc15;
-    transform: translateY(-2px);
 }
 
 .card-pokemon {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 25px;
+    max-width: 320px;
+    margin: 0 auto;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+.stats-pokemon {
     background: #ffffff;
     border-radius: 18px;
     padding: 25px;
@@ -103,3 +110,79 @@ body {
     font-size: 1rem;
     text-transform: capitalize;
 }
+
+.type-area {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.type-area strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #2563eb;
+}
+
+.type-area p {
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.hp-area {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.hp-area strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #2563eb;
+}
+
+.hp-area p {
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.ataque-area {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.ataque-area strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #2563eb;
+}
+
+.ataque-area p {
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+.defesa-area {
+    background: #f1f5f9;
+    color: #0f172a;
+    border-radius: 12px;
+    padding: 15px;
+}
+
+.defesa-area strong {
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: #2563eb;
+}
+
+.defesa-area p {
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
