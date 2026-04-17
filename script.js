@@ -1,3 +1,5 @@
+// Mapeamento de tipo de Pokémon → cor hexadecimal
+// Usado para colorir o card dinamicamente conforme o tipo
 const typeColors = {
     fire:     '#f97316',
     water:    '#3b82f6',
@@ -19,26 +21,46 @@ const typeColors = {
     steel:    '#94a3b8',
 };
 
+// Busca a lista de Pokémons na API e cria um botão para cada um
+// "async" permite usar "await" dentro da função (esperar respostas da API)
 async function buscarDados() {
-    const lista = document.querySelector('#apiTeste');
+    const lista = document.querySelector('#apiTeste'); // seleciona o container dos botões
+
+    // fetch() faz uma requisição HTTP para a URL informada
+    // offset=20 → começa do 21º Pokémon | limit=50 → traz 50 resultados
     const res = await fetch('https://pokeapi.co/api/v2/pokemon/?offset=20&limit=50');
+
+    // .json() converte a resposta (texto) em um objeto JavaScript
     const dados = await res.json();
 
-    lista.innerHTML = '';
+    lista.innerHTML = ''; // limpa qualquer conteúdo anterior
+
+    // Percorre o array de resultados e cria um botão para cada Pokémon
     dados.results.forEach(pokemon => {
-        const btn = document.createElement('button');
-        btn.textContent = pokemon.name;
+        const btn = document.createElement('button'); // cria elemento <button>
+        btn.textContent = pokemon.name;               // define o texto do botão
+
         btn.onclick = () => {
+            // Remove a classe "active" de todos os botões antes de marcar o clicado
             document.querySelectorAll('.lista-botoes button').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            mostrarTudo(pokemon.url);
+            btn.classList.add('active'); // destaca o botão selecionado
+
+            mostrarTudo(pokemon.url); // carrega os detalhes do Pokémon clicado
         };
-        lista.appendChild(btn);
+
+        lista.appendChild(btn); // adiciona o botão ao DOM
     });
 }
 
+// Gera o HTML de uma linha de estatística com barra de progresso
+// label  → nome da stat (ex: "HP")
+// value  → valor numérico (ex: 45)
+// color  → cor da barra em hex
 function statRow(label, value, color) {
+    // Converte o valor para porcentagem (máximo possível na API é 255)
     const pct = Math.min(100, Math.round((value / 255) * 100));
+
+    // Retorna uma string de HTML que será inserida no card
     return `
         <div class="stat-row">
             <span class="stat-name">${label}</span>
@@ -49,29 +71,40 @@ function statRow(label, value, color) {
         </div>`;
 }
 
+// Busca e exibe todos os detalhes de um Pokémon específico
+// url → endereço da API para aquele Pokémon (ex: .../pokemon/25/)
 async function mostrarTudo(url) {
     const card = document.getElementById('pokemonCard');
+
+    // Mostra estado de carregamento enquanto a requisição não termina
     card.innerHTML = `<div class="empty-state"><div class="pokeball-empty"></div><p>Carregando…</p></div>`;
 
+    // Uma única requisição traz todos os dados necessários
     const res = await fetch(url);
     const dados = await res.json();
 
-    const imagem    = dados.sprites.front_default;
-    const habilidade = (dados.abilities[1] ?? dados.abilities[0]).ability.name;
-    const tipo      = dados.types[0].type.name;
-    const hp        = dados.stats[0].base_stat;
-    const ataque    = dados.stats[1].base_stat;
-    const defesa    = dados.stats[2].base_stat;
-    const numero    = String(dados.id).padStart(3, '0');
-    const nome      = dados.name;
+    // Extrai as informações do objeto retornado pela API
+    const imagem     = dados.sprites.front_default;           // URL da imagem
+    const habilidade = (dados.abilities[1] ?? dados.abilities[0]).ability.name; // ?? = "se não existir, usa o anterior"
+    const tipo       = dados.types[0].type.name;              // tipo principal
+    const hp         = dados.stats[0].base_stat;              // pontos de vida
+    const ataque     = dados.stats[1].base_stat;
+    const defesa     = dados.stats[2].base_stat;
+    const numero     = String(dados.id).padStart(3, '0');     // ex: 7 → "007"
+    const nome       = dados.name;
 
-    const cor = typeColors[tipo] || '#facc15';
-    const corBg = cor + '18';
+    // Busca a cor do tipo no objeto typeColors; usa amarelo como fallback
+    const cor   = typeColors[tipo] || '#facc15';
+    const corBg = cor + '18'; // adiciona opacidade baixa (hex 18 ≈ 9% de opacidade)
 
+    // CSS custom properties (variáveis CSS) definidas via JavaScript
+    // Permitem que o CSS use "var(--type-color)" e receba o valor dinâmico
     card.style.setProperty('--type-color', cor);
     card.style.setProperty('--type-bg', corBg);
-    card.style.borderColor = cor + '40';
+    card.style.borderColor = cor + '40'; // borda semi-transparente do card
 
+    // Template literal: string multilinha com interpolação de variáveis (${ })
+    // innerHTML substitui todo o conteúdo do card pelo novo HTML
     card.innerHTML = `
         <div class="card-header">
             <p class="pokemon-number">#${numero}</p>
@@ -93,4 +126,6 @@ async function mostrarTudo(url) {
         </div>`;
 }
 
+// Chama buscarDados() assim que o script é carregado,
+// populando a lista de botões automaticamente ao abrir a página
 buscarDados();
