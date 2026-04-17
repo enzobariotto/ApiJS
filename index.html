@@ -3,26 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PokeAPI</title>
+    <title>Pokédex</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <main class="container">
-        <h1 class="titulo">Pokédex</h1>
-        <p class="subtitulo">Escolha um Pokémon para ver a imagem e a habilidade</p>
+    <header class="header">
+        <div class="header-inner">
+            <span class="pokeball-icon"></span>
+            <h1 class="titulo">Pokédex</h1>
+        </div>
+    </header>
 
-        <div id="apiTeste" class="lista-botoes"></div>
+    <main class="app-layout">
+        <aside class="sidebar">
+            <p class="sidebar-label">Pokémons</p>
+            <div id="apiTeste" class="lista-botoes"></div>
+        </aside>
 
-        <section class="card-pokemon">
-            <div id="imagemPokemon" class="imagem-area"></div>
-            <div id="habilidadePokemon" class="info-area"></div>
-            <div id="tipoPokemon" class="type-area"></div>
-        </section>
-        <br>
-        <section class="stats-pokemon">
-            <div id="hpPokemon" class="hp-area"></div>
-            <div id="ataquePokemon" class="ataque-area"></div>
-            <div id="defesaPokemon" class="defesa-area"></div>
+        <section class="main-content">
+            <div class="pokemon-card" id="pokemonCard">
+                <div class="empty-state">
+                    <div class="pokeball-empty"></div>
+                    <p>Selecione um Pokémon</p>
+                </div>
+            </div>
         </section>
     </main>
 

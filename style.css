@@ -4,185 +4,361 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #0f172a, #1e293b, #334155);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 30px;
-    color: #fff;
+:root {
+    --bg-dark: #0d1117;
+    --bg-card: #161b22;
+    --border: rgba(255, 255, 255, 0.08);
+    --text-primary: #e6edf3;
+    --text-secondary: #8b949e;
+    --accent: #facc15;
+    --header-h: 68px;
 }
 
-.container {
+body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--bg-dark);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* ── Header ── */
+.header {
+    height: var(--header-h);
+    background: rgba(22, 27, 34, 0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+}
+
+.header-inner {
+    max-width: 1200px;
     width: 100%;
-    max-width: 900px;
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(8px);
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
-    text-align: center;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.pokeball-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: conic-gradient(#ef4444 0deg 180deg, #f8fafc 180deg 360deg);
+    border: 3px solid #374151;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.pokeball-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: #374151;
+    transform: translateY(-50%);
+}
+
+.pokeball-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #f8fafc;
+    border: 2px solid #374151;
 }
 
 .titulo {
-    font-size: 2.2rem;
-    margin-bottom: 10px;
-    color: #facc15;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--accent);
+    letter-spacing: -0.5px;
 }
 
-.subtitulo {
-    font-size: 1rem;
-    margin-bottom: 25px;
-    color: #e2e8f0;
+/* ── Layout ── */
+.app-layout {
+    display: flex;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 24px;
+    gap: 24px;
+    flex: 1;
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    width: 210px;
+    flex-shrink: 0;
+    background: var(--bg-card);
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    padding: 16px;
+    height: calc(100vh - var(--header-h) - 48px);
+    position: sticky;
+    top: calc(var(--header-h) + 24px);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-label {
+    font-size: 0.68rem;
+    font-weight: 800;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
 }
 
 .lista-botoes {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 30px;
+    flex-direction: column;
+    gap: 2px;
+    overflow-y: auto;
+    flex: 1;
+    padding-right: 2px;
+}
+
+.lista-botoes::-webkit-scrollbar {
+    width: 3px;
+}
+
+.lista-botoes::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.lista-botoes::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
 }
 
 .lista-botoes button {
-    background: #f8fafc;
-    color: #1e293b;
+    background: transparent;
+    color: var(--text-primary);
     border: none;
-    padding: 8px 14px;
-    font-size: 0.9rem;
+    padding: 9px 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Nunito', sans-serif;
     border-radius: 8px;
     cursor: pointer;
     text-transform: capitalize;
-
+    text-align: left;
+    transition: background 0.15s, color 0.15s;
+    width: 100%;
 }
 
 .lista-botoes button:hover {
-    background: #facc15;
+    background: rgba(250, 204, 21, 0.1);
+    color: var(--accent);
 }
 
-.card-pokemon {
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 25px;
-    max-width: 320px;
-    margin: 0 auto;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+.lista-botoes button.active {
+    background: rgba(250, 204, 21, 0.14);
+    color: var(--accent);
+    font-weight: 800;
 }
 
-.stats-pokemon {
-    background: #ffffff;
-    border-radius: 18px;
-    padding: 25px;
-    max-width: 320px;
-    margin: 0 auto;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
-}
-
-.imagem-area {
-    min-height: 140px;
+/* ── Main content ── */
+.main-content {
+    flex: 1;
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin-bottom: 20px;
+    align-items: flex-start;
 }
 
-.imagem-area img {
-    width: 120px;
+/* ── Pokémon card ── */
+.pokemon-card {
+    background: var(--bg-card);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    width: 100%;
+    max-width: 420px;
+    overflow: hidden;
+    transition: border-color 0.4s;
+    animation: fadeIn 0.25s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Empty state ── */
+.empty-state {
+    padding: 72px 40px;
+    text-align: center;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.pokeball-empty {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: conic-gradient(rgba(239, 68, 68, 0.2) 0deg 180deg, rgba(255, 255, 255, 0.04) 180deg 360deg);
+    border: 4px solid rgba(255, 255, 255, 0.07);
+    margin: 0 auto 16px;
+    position: relative;
+}
+
+.pokeball-empty::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.07);
+    transform: translateY(-50%);
+}
+
+.pokeball-empty::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.04);
+    border: 4px solid rgba(255, 255, 255, 0.07);
+}
+
+/* ── Card header ── */
+.card-header {
+    padding: 28px 24px 20px;
+    text-align: center;
+    position: relative;
+    background: var(--type-bg, rgba(250, 204, 21, 0.08));
+}
+
+.pokemon-number {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 2px;
+    margin-bottom: 4px;
+}
+
+.pokemon-name {
+    font-size: 1.9rem;
+    font-weight: 900;
+    color: #fff;
+    text-transform: capitalize;
+    margin-bottom: 10px;
+    line-height: 1;
+}
+
+.type-badge {
+    display: inline-block;
+    padding: 4px 14px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: #fff;
+    background: var(--type-color, #facc15);
+}
+
+.pokemon-image {
+    display: block;
+    width: 150px;
+    height: 150px;
     image-rendering: pixelated;
+    filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.5));
+    margin: 12px auto 0;
 }
 
-.info-area {
-    background: #f1f5f9;
-    color: #0f172a;
+/* ── Card body ── */
+.card-body {
+    padding: 20px 20px 24px;
+}
+
+.ability-section {
+    background: rgba(255, 255, 255, 0.04);
     border-radius: 12px;
-    padding: 15px;
+    padding: 14px 16px;
+    margin-bottom: 18px;
+    border: 1px solid var(--border);
 }
 
-.info-area strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: #2563eb;
+.section-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1.8px;
+    color: var(--text-secondary);
+    margin-bottom: 6px;
 }
 
-.info-area p {
-    font-size: 1rem;
+.ability-name {
+    font-size: 0.95rem;
+    font-weight: 700;
     text-transform: capitalize;
+    color: var(--text-primary);
 }
 
-.type-area {
-    background: #f1f5f9;
-    color: #0f172a;
-    border-radius: 12px;
-    padding: 15px;
+/* ── Stats ── */
+.stats-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.type-area strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: #2563eb;
+.stat-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
 }
 
-.type-area p {
-    font-size: 1rem;
-    text-transform: capitalize;
+.stat-name {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-secondary);
+    width: 36px;
+    flex-shrink: 0;
 }
 
-.hp-area {
-    background: #f1f5f9;
-    color: #0f172a;
-    border-radius: 12px;
-    padding: 15px;
+.stat-value {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    width: 28px;
+    flex-shrink: 0;
+    text-align: right;
 }
 
-.hp-area strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: #2563eb;
+.stat-bar-bg {
+    flex: 1;
+    height: 7px;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 4px;
+    overflow: hidden;
 }
 
-.hp-area p {
-    font-size: 1rem;
-    text-transform: capitalize;
+.stat-bar {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.55s cubic-bezier(0.4, 0, 0.2, 1);
 }
-
-.ataque-area {
-    background: #f1f5f9;
-    color: #0f172a;
-    border-radius: 12px;
-    padding: 15px;
-}
-
-.ataque-area strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: #2563eb;
-}
-
-.ataque-area p {
-    font-size: 1rem;
-    text-transform: capitalize;
-}
-.defesa-area {
-    background: #f1f5f9;
-    color: #0f172a;
-    border-radius: 12px;
-    padding: 15px;
-}
-
-.defesa-area strong {
-    display: block;
-    font-size: 1.1rem;
-    margin-bottom: 8px;
-    color: #2563eb;
-}
-
-.defesa-area p {
-    font-size: 1rem;
-    text-transform: capitalize;
-}
-
